@@ -9,5 +9,5 @@ app.use(express.urlencoded({extended:true}));
 app.use(cors());
 
 app.listen(8000, () => {
-    "Listening on port 8000"
+    console.log("Listening  port 8000")
 })
