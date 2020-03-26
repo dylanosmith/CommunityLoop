@@ -17,11 +17,33 @@ const UserSchema = new mongoose.Schema ({
         required: [true, "Email is required"]
     },
 
+    password: {
+        type: String,
+        required: [true, "password is required"],
+        minlength: [8, "Password must be at least 8 characters."]
+    },
+
+    validate: {
+        validator: val => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
+        message: "Please enter a valid email"
+    },
+
     phoneNumer: {
         type: Number,
         required: [true, "Phone is required"]
     },
 
 }, {timestamps: true});
+
+UserSchema.virtual('confirmpassword')
+    .get( () => this._confirmPassword)
+    .set( value => this._confirmPassword = value );
+
+UserSchema.pre('validate', function(next) {
+    if (this.password !== this.confirmPassword) {
+        this.invalidate('confirmPassword', 'Password must match confirm password');
+    }
+    next();
+});
 
 module.exports = mongoose.model("User", UserSchema);
