@@ -9,6 +9,12 @@ import UserProfile from './views/UserProfile';
 import UserReviews from './views/UserReviews';
 import ManagePosts from './views/ManagePosts';
 import ManageTasks from './views/ManageTasks';
+import Home from "./views/Home";
+import NewTask from "./views/NewTask";
+import EditTask from "./views/EditTask";
+import EditProfile from "./views/EditProfile";
+
+
 
 
 function App() {
