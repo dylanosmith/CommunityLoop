@@ -1,14 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-UserSchema.pre("save", function(next) {
-    bcrypt.hash(this.password, 10)
-        .then(hash => {
-            this.password = hash;
-            next();
-        });
-});
-
 const UserSchema = new mongoose.Schema ({
 
     firstName: {
@@ -47,6 +39,14 @@ const UserSchema = new mongoose.Schema ({
 UserSchema.virtual('confirmpassword')
     .get( () => this._confirmPassword)
     .set( value => this._confirmPassword = value );
+
+UserSchema.pre("save", function(next) {
+    bcrypt.hash(this.password, 10)
+        .then(hash => {
+            this.password = hash;
+            next();
+        });
+});
 
 UserSchema.pre('validate', function(next) {
     if (this.password !== this.confirmPassword) {
