@@ -31,3 +31,13 @@ module.exports.deleteUser = (req, res) => {
         .then(result => res.json ({ result: result }))
         .catch(err => res.json ({ message: "Houston we have a problem", error:err }));
 };
+
+module.exports.registerUser = (req, res) => {
+    const user = new User(req.body);
+    user
+        .save()
+        .then(() => {
+            res.json({ msg: "success!", user: user });
+        })
+        .catch(err => res.json(err));
+};
