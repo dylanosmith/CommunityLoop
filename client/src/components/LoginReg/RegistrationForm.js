@@ -19,7 +19,7 @@ const initializeUserState = {
   email: "",
   password: "",
   confirmpassword: "",
-  phoneNumber: "",
+  phoneNumber: 0000000000,
   submitted: false
 }
 const RegistrationForm = props => {

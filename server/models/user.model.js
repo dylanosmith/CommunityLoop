@@ -47,6 +47,8 @@ UserSchema.virtual('confirmpassword')
     .get( () => this._confirmPassword)
     .set( value => this._confirmPassword = value );
 
+
+
 UserSchema.pre("save", function(next) {
     bcrypt.hash(this.password, 10)
         .then(hash => {
@@ -61,5 +63,7 @@ UserSchema.pre('validate', function(next) {
     }
     next();
 });
+
+
 
 module.exports = mongoose.model("User", UserSchema);

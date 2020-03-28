@@ -12,8 +12,7 @@ const UserProfile = props =>{
 
     });
     useEffect(() => {
-        axios.get('http://localhost:8000/api/users/${id}')
-        // need backticks above?
+        axios.get(`http://localhost:8000/api/users/${id}`)
             .then(res => {
                 console.log(res);
                 setUser(res.data.user);
@@ -24,14 +23,23 @@ const UserProfile = props =>{
     });
     
     return(
-        <div className="navbar">
-            <h1>User: {user.firstName} {user.lastName}</h1>
-            <p> <img src={user.image} alt="profilePic"/> </p>
-            
-        </div>
-        <div className="sidebar">
-            <ul>Notifcations:</ul>
-                <li>{user.notifications}</li>
+        <div className="wrapper">
+            <div className="navbar">
+                <h1>User: {user.firstName} {user.lastName}</h1>
+                <p> <img src={user.image} alt="profilePic"/> </p>
+                <Link to="/user/:id/edit">Edit Profile</Link>
+                <Link to="/user/:id/posts">Manage Posts</Link>
+                <Link to="/user/:id/tasks">Manage Tasks</Link>
+            </div>
+            <div className="sidebar">
+                <ul>Notifcations:</ul>
+                    <li>{user.notifications}</li>
+                    {/* button to show notifications? */}
+                
+            </div>
+            <div className="mainContainer">
+                <p></p>
+            </div>
         </div>
     )
 }
