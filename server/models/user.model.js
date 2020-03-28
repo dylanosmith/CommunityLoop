@@ -33,6 +33,14 @@ const UserSchema = new mongoose.Schema ({
         required: [true, "Phone is required"]
     },
 
+    notifications: {
+        type: String
+    },
+
+    image: {
+        type: String,
+    }
+    // Add image url message to edit profile views page
 }, {timestamps: true});
 
 UserSchema.virtual('confirmpassword')
