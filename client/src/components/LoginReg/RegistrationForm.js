@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
         width: '25ch',
       },
     },
-  }));
+}));
 
 const initializeUserState = {
   firstName: "",
