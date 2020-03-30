@@ -106,7 +106,7 @@ const RegistrationForm = props => {
                   value={userState.confirmPassword}  
                   name="confirmPassword"
                   onChange={onChangeHandler}
-                  error={userState.confirmpassword !== userState.password}
+                  error={userState.confirmPassword !== userState.password}
                   helperText={"Passwords do not match"}
                 /><br/>
                 <Button type="submit" variant ="contained" color="secondary">Submit</Button>

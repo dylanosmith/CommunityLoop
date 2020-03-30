@@ -43,7 +43,7 @@ const UserSchema = new mongoose.Schema ({
     // Add image url message to edit profile views page
 }, {timestamps: true});
 
-UserSchema.virtual('confirmpassword')
+UserSchema.virtual('confirmPassword')
     .get( () => this._confirmPassword)
     .set( value => this._confirmPassword = value );
 

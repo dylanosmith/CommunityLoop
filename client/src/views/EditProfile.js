@@ -33,7 +33,7 @@ const EditProfile = props =>{
             lastName: edit.lastName,
             email: edit.email,
             password: edit.password,
-            confirmpassword: edit.confirmpassword,
+            confirmpassword: edit.confirmPassword,
             phoneNumber: edit.phoneNumber,
             image: edit.image,
             submitted: false
