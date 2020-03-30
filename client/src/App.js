@@ -17,7 +17,7 @@ function App() {
       <NavAppBar />
       <Router>
         <LoginRegView path = "/" />
-        <Home path = "/home" />
+        <HomePage path = "/home" />
         <NewTask path = "/tasks/new" />
         <TaskDetail path = "/tasks/:id" />
         <EditTask path = "/tasks/:id/edit" />
@@ -33,3 +33,4 @@ function App() {
 }
 
 export default App;
+
