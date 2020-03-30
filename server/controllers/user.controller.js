@@ -1,7 +1,10 @@
-const User = require('../models/user.model')
+const User = require('../models/user.model');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 
 module.exports.Create = (req, res) => {
-    console.log("creating a new user", req.body);
+    console.log(req.body);
     User.create(req.body)
         .then(newUser => res.json(newUser))
         .catch(err => res.json(err));
@@ -32,12 +35,32 @@ module.exports.deleteUser = (req, res) => {
         .catch(err => res.json ({ message: "Houston we have a problem", error:err }));
 };
 
-module.exports.registerUser = (req, res) => {
-    const user = new User(req.body);
-    user
-        .save()
-        .then(() => {
-            res.json({ msg: "success!", user: user });
+module.exports.Login = (req,res) => {
+    console.log(req.body);
+    User.findOne({ email: req.body.email })
+        .then(user => {
+            if(user === null){
+                res.json({ msg: "invalid login attempt" });
+            } else {
+                bcrypt
+                    .compare(req.body.password, user.password)
+                    .then(passwordIsValid => {
+                        if(passwordIsValid){
+                            const newJWT = jwt.sign({
+                                _id: user._id
+                            })
+                            const secret = "mysecret";
+                            res
+                                .cookie("usertoken", newJWT, secret, {
+                                httpOnly: true
+                                })
+                                .json({msg: "success!"});
+                        } else {
+                            res.json({msg: "invalid login attempt"});
+                        }
+                    })
+                    .catch(err => res.json({msg: "invalid login attempt", error: err}));
+            }
         })
         .catch(err => res.json(err));
 };
