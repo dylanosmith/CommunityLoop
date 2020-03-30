@@ -9,15 +9,25 @@ import UserProfile from './views/UserProfile';
 import UserReviews from './views/UserReviews';
 import ManagePosts from './views/ManagePosts';
 import ManageTasks from './views/ManageTasks';
+import Home from "./views/Home";
+import NewTask from "./views/NewTask";
+import EditTask from "./views/EditTask";
+import EditProfile from "./views/EditProfile";
 
 
-function App() {
+
+
+function App(
   return (
     <div className="App">
       <NavAppBar />
       <Router>
         <LoginRegView path = "/" />
+<<<<<<< HEAD
         <HomePage path = "/home" />
+=======
+        {/* <Home path = "/home" /> */}
+>>>>>>> fd5e11081b48bf02f05917fee033cff8cbd2c590
         <NewTask path = "/tasks/new" />
         <TaskDetail path = "/tasks/:id" />
         <EditTask path = "/tasks/:id/edit" />
