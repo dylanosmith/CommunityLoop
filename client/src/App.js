@@ -9,7 +9,7 @@ import UserProfile from './views/UserProfile';
 import UserReviews from './views/UserReviews';
 import ManagePosts from './views/ManagePosts';
 import ManageTasks from './views/ManageTasks';
-import HomePage from "./views/Home";
+import HomePage from './views/HomePage';
 import NewTask from "./views/NewTask";
 import EditTask from "./views/EditTask";
 import EditProfile from "./views/EditProfile";

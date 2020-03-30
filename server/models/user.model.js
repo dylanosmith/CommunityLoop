@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema ({
         type: String,
         required: [true, "Email is required"],
         validate: {
-            validator: val => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
+            validator: val => /^([\w-]+@([\w-]+\.)+[\w-]+)?$/.test(val),
             message: "Please enter a valid email"
         }
     },
@@ -47,7 +47,12 @@ UserSchema.virtual('confirmPassword')
     .get( () => this._confirmPassword)
     .set( value => this._confirmPassword = value );
 
-
+// UserSchema.pre('validate', function(next) {
+//     if (this.password !== this._confirmPassword) {
+//         this.invalidate('confirmPassword', 'Password must match confirm password');
+//     }
+//     next();
+// });
 
 UserSchema.pre("save", function(next) {
     bcrypt.hash(this.password, 10)
@@ -56,14 +61,6 @@ UserSchema.pre("save", function(next) {
             next();
         });
 });
-
-UserSchema.pre('validate', function(next) {
-    if (this.password !== this._confirmPassword) {
-        this.invalidate('confirmPassword', 'Password must match confirm password');
-    }
-    next();
-});
-
 
 
 module.exports = mongoose.model("User", UserSchema);

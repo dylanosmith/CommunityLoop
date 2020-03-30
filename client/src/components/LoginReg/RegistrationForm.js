@@ -73,7 +73,7 @@ const RegistrationForm = props => {
                   value={userState.email} 
                   name="email"
                   onChange={onChangeHandler}
-                  error={/^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(userState.email)}
+                  error={/^([\w-]+@([\w-]+\.)+[\w-]+)?$/.test(userState.email)}
                   helperText={"Please enter a valid email address"}
                 /><br/>
                 <TextField 
@@ -84,8 +84,8 @@ const RegistrationForm = props => {
                   value={userState.phoneNumber} 
                   name="phoneNumber"
                   onChange={onChangeHandler}
-                  error={/^([0-9]{3}+[0-9]{3}+[0-9]{4})/.test(userState.phoneNumber)}
-                  helperText={"Please enter a valid phone number"}
+                  // error={/^([0-9]{3}+[0-9]{3}+[0-9]{4})/.test(userState.phoneNumber)}
+                  // helperText={"Please enter a valid phone number"}
                 /><br/>
                 <TextField 
                   className="inputBox" 
@@ -102,7 +102,7 @@ const RegistrationForm = props => {
                   className="inputBox" 
                   type="password" 
                   id="standard-password-input" 
-                  label="confirm Password"
+                  label="Confirm Password"
                   value={userState.confirmPassword}  
                   name="confirmPassword"
                   onChange={onChangeHandler}

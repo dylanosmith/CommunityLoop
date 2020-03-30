@@ -9,7 +9,6 @@ const UserProfile = props =>{
         lastName:"",
         notifications:"",
         image:"",
-
     });
     useEffect(() => {
         axios.get(`http://localhost:8000/api/users/${id}`)
