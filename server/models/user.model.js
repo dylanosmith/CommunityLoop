@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema ({
         minlength: [8, "Password must be at least 8 characters."]
     },
 
-    phoneNumer: {
+    phoneNumber: {
         type: Number,
         required: [true, "Phone is required"]
     },
@@ -58,7 +58,7 @@ UserSchema.pre("save", function(next) {
 });
 
 UserSchema.pre('validate', function(next) {
-    if (this.password !== this.confirmPassword) {
+    if (this.password !== this._confirmPassword) {
         this.invalidate('confirmPassword', 'Password must match confirm password');
     }
     next();

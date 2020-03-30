@@ -23,7 +23,7 @@ function App() {
       <NavAppBar />
       <Router>
         <LoginRegView path = "/" />
-        {/* <Home path = "/home" /> */}
+        <Home path = "/home" />
         <NewTask path = "/tasks/new" />
         <TaskDetail path = "/tasks/:id" />
         <EditTask path = "/tasks/:id/edit" />
