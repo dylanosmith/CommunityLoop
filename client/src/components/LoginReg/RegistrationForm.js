@@ -52,8 +52,8 @@ const RegistrationForm = props => {
                   value={userState.firstName} 
                   name="firstName"
                   onChange={onChangeHandler}
-                  error={}
-                  helperText={}
+                  error={userState.firstName < 2}
+                  helperText={"First name must be at least 2 characters"}
                 /><br/>
                 <TextField 
                   className="inputBox" 
@@ -63,8 +63,8 @@ const RegistrationForm = props => {
                   value={userState.lastName} 
                   name="lastName"
                   onChange={onChangeHandler}
-                  error={}
-                  helperText={}
+                  error={userState.lastName < 2}
+                  helperText={"Last name must be at least 2 characters "}
                 /><br/>
                 <TextField 
                   className="inputBox" 
@@ -74,8 +74,8 @@ const RegistrationForm = props => {
                   value={userState.email} 
                   name="email"
                   onChange={onChangeHandler}
-                  error={}
-                  helperText={}
+                  error={/^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(userState.email)}
+                  helperText={"Please enter a valid email address"}
                 /><br/>
                 <TextField 
                   className="inputBox" 
@@ -85,8 +85,8 @@ const RegistrationForm = props => {
                   value={userState.phoneNumber} 
                   name="phoneNumber"
                   onChange={onChangeHandler}
-                  error={}
-                  helperText={}
+                  error={/^([0-9]{3}+[0-9]{3}+[0-9]{4})/.test(userState.phoneNumber)}
+                  helperText={"Please enter a valid phone number"}
                 /><br/>
                 <TextField 
                   className="inputBox" 
@@ -99,8 +99,8 @@ const RegistrationForm = props => {
                   value={userState.password} 
                   name="password"
                   onChange={onChangeHandler}
-                  error={}
-                  helperText={}
+                  error={userState.password < 2}
+                  helperText={"Password must be at least 2 characters"}
                 /><br/>
                 <TextField 
                   className="inputBox" 
@@ -113,8 +113,8 @@ const RegistrationForm = props => {
                   value={userState.confirmpassword} 
                   name="confirmpassword"
                   onChange={onChangeHandler}
-                  error={}
-                  helperText={}
+                  error={userState.confirmpassword !== userState.password}
+                  helperText={"Passwords do not match"}
                 /><br/>
                 <Button variant ="contained" color="secondary">Submit</Button>
             </form>
