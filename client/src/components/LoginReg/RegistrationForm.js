@@ -18,24 +18,23 @@ const initializeUserState = {
   lastName: "",
   email: "",
   password: "",
-  confirmpassword: "",
-  phoneNumber: "",
-  submitted: false
+  confirmPassword: "",
+  phoneNumber: 1234567891
 }
 const RegistrationForm = props => {
     const classes = useStyles();
     const [userState, setUserState] = useState({initializeUserState});
 
     const onChangeHandler = event => {
-      event.preventDefault();
       setUserState({...userState, [event.target.name]: event.target.value});
     };
 
     const onSubmitHandler = event => {
-      axios.post("http:/localhost:8000/api/users/new", userState)
+      event.preventDefault();
+      axios.post("http://localhost:8000/api/users/register", userState)
         .then(newUser => {
-            console.log(newUser);
-            props.navigate("/home");
+          console.log(newUser)
+            navigate("/home");
         })
         .catch(err => console.log("Problem with axios post to create new user", err));
     };
@@ -94,9 +93,6 @@ const RegistrationForm = props => {
                   id="standard-password-input" 
                   label="Password"
                   value={userState.password}
-                  type="password" 
-                  autoComplete="current-password" 
-                  value={userState.password} 
                   name="password"
                   onChange={onChangeHandler}
                   error={userState.password < 2}
@@ -106,17 +102,14 @@ const RegistrationForm = props => {
                   className="inputBox" 
                   type="password" 
                   id="standard-password-input" 
-                  label="confirmPassword"
-                  value={userState.confirmpassword}
-                  type="password" 
-                  autoComplete="current-password" 
-                  value={userState.confirmpassword} 
-                  name="confirmpassword"
+                  label="confirm Password"
+                  value={userState.confirmPassword}  
+                  name="confirmPassword"
                   onChange={onChangeHandler}
                   error={userState.confirmpassword !== userState.password}
                   helperText={"Passwords do not match"}
                 /><br/>
-                <Button variant ="contained" color="secondary">Submit</Button>
+                <Button type="submit" variant ="contained" color="secondary">Submit</Button>
             </form>
             
         </div>
