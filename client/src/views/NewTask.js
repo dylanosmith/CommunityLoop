@@ -27,7 +27,7 @@ const onSubmitHandler = event => {
     })
     .then(response => {
         console.log("Response:", response);
-        props.navigate("/tasks")
+        props.navigate(`/tasks/${props.id}/list`);
     })
     .catch(error => console.log("Error:", error))
 }

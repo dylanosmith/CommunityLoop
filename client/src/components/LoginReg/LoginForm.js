@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
 import { navigate } from "@reach/router";
-
+import NavbarContext from '../../context/NavbarContext';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,13 +19,20 @@ const LoginForm = props => {
     
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-  
+    const context = useContext(NavbarContext);
+
     const onSubmitHandler = event => {
+
+      let data = {email: email, password: password}
       event.preventDefault();
-      axios.post("http://localhost:8000/api/login", email,password)
+      axios.post("http://localhost:8000/api/login", data)
         .then(confirmation => {
             console.log(confirmation);
-            navigate("/home");
+            context.userid = confirmation.data.user._id;
+            context.firstName = confirmation.data.user.firstName;
+            context.lastName = confirmation.data.user.lastName;
+            context.email = confirmation.data.user.email;
+            navigate("/home/");
         })
         .catch(err => console.log("Problem with axios post to login route", err));
     };

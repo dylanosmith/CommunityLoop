@@ -15,7 +15,7 @@ const TaskDetail = props => {
         .catch(error =>
             console.log("SOMETHING IS WRONGGGGGG! HELP MEEEEE", error)
         );
-    }, []);
+    }, [props.id]);
     return(
         <div>
             <h2>{ props.title }</h2>

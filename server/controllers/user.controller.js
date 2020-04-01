@@ -39,6 +39,7 @@ module.exports.Login = (req,res) => {
     console.log(req.body);
     User.findOne({ email: req.body.email })
         .then(user => {
+            res.json({user: user});
             if(user === null){
                 res.json({ msg: "invalid login attempt" });
             } else {

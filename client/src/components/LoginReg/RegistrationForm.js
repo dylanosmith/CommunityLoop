@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import {navigate} from '@reach/router';
+import { navigate } from '@reach/router';
+import NavbarContext from '../../context/NavbarContext';
 
 const useStyles = makeStyles(theme => ({
     root: {
       '& .MuiTextField-root': {
         margin: theme.spacing(1),
-        width: '25ch',
+        width:  '25ch',
       },
     },
 }));
@@ -23,7 +24,16 @@ const initializeUserState = {
 }
 const RegistrationForm = props => {
     const classes = useStyles();
-    const [userState, setUserState] = useState({initializeUserState});
+    const [userState, setUserState] = useState({
+      firstName: initializeUserState.firstName,
+      lastName: initializeUserState.lastName,
+      email: initializeUserState.email,
+      password: initializeUserState.password,
+      confirmPassword: initializeUserState.confirmPassword,
+      phoneNumber: initializeUserState.phoneNumber 
+    });
+
+    const context = useContext(NavbarContext);
 
     const onChangeHandler = event => {
       setUserState({...userState, [event.target.name]: event.target.value});
@@ -33,8 +43,12 @@ const RegistrationForm = props => {
       event.preventDefault();
       axios.post("http://localhost:8000/api/users/register", userState)
         .then(newUser => {
-          console.log(newUser)
-            navigate("/home");
+          console.log(newUser);
+          context.userid = newUser.data._id;
+          context.firstName = newUser.data.firstName;
+          context.lastName = newUser.data.lastName;
+          context.email = newUser.data.email;
+          navigate("/home/");
         })
         .catch(err => console.log("Problem with axios post to create new user", err));
     };
@@ -51,7 +65,7 @@ const RegistrationForm = props => {
                   value={userState.firstName} 
                   name="firstName"
                   onChange={onChangeHandler}
-                  error={userState.firstName < 2}
+                  error={userState.firstName.length < 2}
                   helperText={"First name must be at least 2 characters"}
                 /><br/>
                 <TextField 
@@ -62,7 +76,7 @@ const RegistrationForm = props => {
                   value={userState.lastName} 
                   name="lastName"
                   onChange={onChangeHandler}
-                  error={userState.lastName < 2}
+                  error={userState.lastName.length < 2}
                   helperText={"Last name must be at least 2 characters "}
                 /><br/>
                 <TextField 
@@ -73,19 +87,19 @@ const RegistrationForm = props => {
                   value={userState.email} 
                   name="email"
                   onChange={onChangeHandler}
-                  error={/^([\w-]+@([\w-]+\.)+[\w-]+)?$/.test(userState.email)}
+                  error={!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(userState.email)}
                   helperText={"Please enter a valid email address"}
                 /><br/>
                 <TextField 
                   className="inputBox" 
-                  type="phone" 
+                  type="tel" 
                   required id="standard-required" 
                   label="Phone Number:" 
                   value={userState.phoneNumber} 
                   name="phoneNumber"
                   onChange={onChangeHandler}
-                  // error={/^([0-9]{3}+[0-9]{3}+[0-9]{4})/.test(userState.phoneNumber)}
-                  // helperText={"Please enter a valid phone number"}
+                  error={!/^(0|[1-9][0-9]{9})$/i.test(userState.phoneNumber)}
+                  helperText={"Please enter a valid phone number"}
                 /><br/>
                 <TextField 
                   className="inputBox" 
@@ -95,8 +109,8 @@ const RegistrationForm = props => {
                   value={userState.password}
                   name="password"
                   onChange={onChangeHandler}
-                  error={userState.password < 2}
-                  helperText={"Password must be at least 2 characters"}
+                  error={userState.password.length < 8}
+                  helperText={"Password must be at least 8 characters"}
                 /><br/>
                 <TextField 
                   className="inputBox" 

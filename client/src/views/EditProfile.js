@@ -1,8 +1,9 @@
 import React, {useState, useEffect } from "react";
 import axios from "axios";
-import {navigate} from "@reach/router";
-// import UserProfile from "./UserProfile";
-import { Button, TextField } from '@material-ui/core';
+import { navigate } from "@reach/router";
+import UserProfile from "./UserProfile";
+import TextField from '@material-ui/core/TextField';
+import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -23,20 +24,19 @@ const EditProfile = props =>{
         lastName:"",
         email:"",
         password:"",
-        confirmpassword:"",
+        confirmPassword:"",
         phoneNumber:"",
         image:"",
         submitted: false
     });
 
-    useEffect(() => {
-        axios.get(`http://localhost:8000/api/users/${id}`)
-        .then(res => {
-            console.log(res);
-            setEdit(res.data.user);
-        })
-        .catch(err => console.log(err))
-    });
+    useEffect(() =>{
+      axios.get(`http://localhost:8000/api/users/${id}`)
+          .then(result => {
+              console.log(result);
+              setEdit(result.data.user);
+          });
+  }, [])
 
     const onChangeHandler = event => {
         setEdit({...edit, [event.target.name]: event.target.value});
@@ -45,15 +45,13 @@ const EditProfile = props =>{
 
     const onSubmitHandler = e => {
         e.preventDefault();
-        axios.put(`/api/users/update/${id}`, {
+        axios.put(`http://localhost:8000/api/users/update/${id}`, {
             firstName: edit.firstName,
             lastName: edit.lastName,
             email: edit.email,
             password: edit.password,
-            confirmpassword: edit.confirmPassword,
             phoneNumber: edit.phoneNumber,
             image: edit.image,
-            submitted: false
         })
         .then(res => {
             console.log(res);
@@ -62,7 +60,7 @@ const EditProfile = props =>{
                 submitted: true
             });
             alert("User was updated")
-            navigate(`user/${id}`)
+            navigate(`/user/${id}`)
         })
         .catch(err => console.log("THERE IS A PROBLEM!!!!!!!!!!!!", err));
         
@@ -80,7 +78,7 @@ const EditProfile = props =>{
                   value={edit.firstName} 
                   name="firstName"
                   onChange={onChangeHandler}
-                  error={edit.firstName < 2}
+                  error={edit.firstName.length < 2}
                   helperText={"First name must be at least 2 characters"}
                 /><br/>
                 <TextField 
@@ -91,7 +89,7 @@ const EditProfile = props =>{
                   value={edit.lastName} 
                   name="lastName"
                   onChange={onChangeHandler}
-                  error={edit.lastName < 2}
+                  error={edit.lastName.length < 2}
                   helperText={"Last name must be at least 2 characters "}
                 /><br/>
                 <TextField 
@@ -102,7 +100,7 @@ const EditProfile = props =>{
                   value={edit.email} 
                   name="email"
                   onChange={onChangeHandler}
-                  error={/^([\w-]+@([\w-]+\.)+[\w-]+)?$/.test(edit.email)}
+                  error={!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(edit.email)}
                   helperText={"Please enter a valid email address"}
                 /><br/>
                 <TextField 
@@ -113,23 +111,23 @@ const EditProfile = props =>{
                   value={edit.phoneNumber} 
                   name="phoneNumber"
                   onChange={onChangeHandler}
-                  // error={/^([0-9]{3}+[0-9]{3}+[0-9]{4})/.test(edit.phoneNumber)}
-                  // helperText={"Please enter a valid phone number"}
+                  error={!/^(0|[1-9][0-9]{9})$/i.test(edit.phoneNumber)}
+                  helperText={"Please enter a valid phone number"}
                 /><br/>
                 <TextField 
-                  className="inputBox" 
-                  type="password" 
+                  className="inputBox"
+                  type="text" 
                   id="standard-password-input" 
                   label="Password"
                   value={edit.password}
                   name="password"
                   onChange={onChangeHandler}
-                  error={edit.password < 2}
+                  error={edit.password. length < 8}
                   helperText={"Password must be at least 2 characters"}
                 /><br/>
                 <TextField 
                   className="inputBox" 
-                  type="password" 
+                  type="text" 
                   id="standard-password-input" 
                   label="confirm Password"
                   value={edit.confirmPassword}  
@@ -138,6 +136,15 @@ const EditProfile = props =>{
                   error={edit.confirmPassword !== edit.password}
                   helperText={"Passwords do not match"}
                 /><br/>
+                <TextField
+                  classes="inputBox"
+                  type="url"
+                  name="image"
+                  value={edit.image}
+                  onChange={onChangeHandler}
+                  helperText={"Must be a url"}
+                /><br/>
+
                 <Button type="submit" variant ="contained" color="secondary">Submit</Button>
             </form>
         </div>
