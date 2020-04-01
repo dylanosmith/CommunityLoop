@@ -6,8 +6,6 @@ import NavbarContext from '../context/NavbarContext';
 // import Map from '../components/Map';
 import axios from "axios";
 
-
-
 const HomePage = props => {
     const context = useContext(NavbarContext);
     // const [user, setUser] = React.useState({})
