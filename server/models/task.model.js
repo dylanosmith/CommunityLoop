@@ -43,7 +43,7 @@ const TaskSchema = new mongoose.Schema ({
 
     location: {
         streetLine1: { type: String, required:true,},
-        streetLine2: { type: String, required:true,},
+        streetLine2: String,
         city: { type: String, required:true,},
         state: { type: String, required:true,},
         zipcode: { type: Number, required:true,},

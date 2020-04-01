@@ -35,10 +35,7 @@ const UserProfile = props =>{
                 <Link to={`/tasks/new`}>Create New Task</Link>
             </div>
             <div className="sidebar">
-                <ul>Notifications:</ul>
-                    <li>{user.notifications}</li>
-                    {/* button to show notifications? */}
-                
+                <p>Dude.</p>
             </div>
             <div className="mainContainer">
                 <p></p>
