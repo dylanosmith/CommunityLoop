@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import { Button, TextField } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'; 
 import axios from 'axios';
 import { navigate } from '@reach/router';
 import NavbarContext from '../../context/NavbarContext';
@@ -101,7 +101,7 @@ const RegistrationForm = props => {
                 /><br/>
                 <TextField 
                   className="inputBox" 
-                  type="text" 
+                  type="text"
                   id="standard-password-input" 
                   label="Password"
                   value={userState.password}

@@ -5,6 +5,8 @@ import NavbarContext from '../context/NavbarContext';
 // import SideBar from '../components/SideBar'
 // import Map from '../components/Map';
 import axios from "axios";
+import TaskList from '../views/TaskList'
+import { Button } from '@material-ui/core';
 
 const HomePage = props => {
     const context = useContext(NavbarContext);
@@ -27,32 +29,28 @@ const HomePage = props => {
     //     })
     // }, []);
     return(
-        <div style={{backgroundColor:"#b19cd9", height:"100%", verticalAlign:"top"}}>
+        <div style={{backgroundImage:"linear-gradient(to bottom, #3f51b5 50%, #4e42f5 100%)", height:"100%", verticalAlign:"top"}}>
             {/* <div style={{backgroundColor:"black", height:"25%", margin:"0% 10% 0% 10%"}}>
                 <h1 style={{textAlign:"left", margin:"0% 0% 0% 15%"}}>Community Loop</h1>
                 <input placeholder="Search CommLoop" type="text" style={{marginLeft:"92%"}}></input>
             </div> */}
 
-            <div style={{backgroundColor:"white", height:"15%", textAlign:"left", verticalAlign:"top"}}>
-                    <h3 style={{display:"inline-block"}}>Welcome {context.firstName}!</h3>
-                    <p style={{display:"inline-block"}}>View Profile</p>
-                    <h5 style={{display:"inline-block"}}>Ratings:</h5>
-                    <button style={{display:"inline-block"}}>Post a job</button>
-                    <button style={{display:"inline-block"}}>Something else</button>
+            <div style={{backgroundColor:"white", height:"15%", textAlign:"left", verticalAlign:"top", marginBottom:"2%"}}>
+                    <h3 style={{display:"inline-block", marginLeft:"6%"}}>Welcome {context.firstName}!</h3>
+                    <Button variant="outline">View Profile</Button>
+                    <h5 style={{display:"inline-block", marginLeft:"15%", marginRight:"15%"}}>Ratings:</h5>
+                    <Button variant="outline">Post a Job</Button>
+                    <Button variant="outline">Do some stuff</Button>
             </div>
             <div style={{backgroundColor:"white", width:"25%", display:"inline-block", verticalAlign:"top"}}>
-            <TaskList firstName={user.firstName}/>
+            {/* <TaskList firstName={user.firstName}/> */}
                 <h2>Posted Jobs</h2>
-                <button>Sort By:</button>
-                <p style={{display:"block"}}>Develop my App</p>
-                <p>TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT</p>
+                <Button variant="outline">Sort By: </Button>
                 <div className="sidebar">
-                <ul>Notifications:</ul>
-                    <li>{user.notifications}</li>
-                    {/* button to show notifications? */}
+                <TaskList />
                 </div>
             </div>
-            <div style={{backgroundColor:"white", width:"70%", display:"inline-block"}}>
+            <div style={{backgroundColor:"white", width:"70%", height:"775px", display:"inline-block", marginLeft:"1%"}}>
                 Map
             </div>
         </div>
