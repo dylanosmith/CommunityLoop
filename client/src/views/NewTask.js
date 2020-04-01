@@ -1,7 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { Button, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { navigate } from "@reach/router";
+import NavbarContext from "../context/NavbarContext";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: '25ch',
+      },
+    },
+  }));
 
 const NewTask = props =>{
+    const classes = useStyles();
+    const context = useContext(NavbarContext);
+
     const [title, setTitle] = useState("");
     const [BidderID, setBidderID] = useState(0);
     const [PosterID, setPosterID] = useState(0);
@@ -12,45 +28,54 @@ const NewTask = props =>{
     const [typeOfTask, setTypeOfTask] = useState(false);
     const [location, setLocation] = useState("")
 
-const onSubmitHandler = event => {
-    event.preventDefault();
-    axios.post('http://localhost:8000/api/tasks/new', {
-        title,
-        BidderID,
-        PosterID,
-        description,
-        startDate,
-        completionDate,
-        completed,
-        typeOfTask,
-        location
-    })
-    .then(response => {
-        console.log("Response:", response);
-        props.navigate(`/tasks/${props.id}/list`);
-    })
-    .catch(error => console.log("Error:", error))
-}
+    const onSubmitHandler = event => {
+        event.preventDefault();
+        axios.post('http://localhost:8000/api/tasks/new', {
+            title,
+            BidderID,
+            PosterID,
+            description,
+            startDate,
+            completionDate,
+            completed,
+            typeOfTask,
+            location
+        })
+        .then(response => {
+            console.log("Response:", response);
+            props.navigate(`/tasks/${props.id}/list`);
+        })
+        .catch(error => console.log("Error:", error))
+    }
     return (
         <div>
             <h1>New Task</h1>
-            <form className="taskForm" onSubmit={onSubmitHandler}>
-                <p>
-                    <label>Task Title</label> <br />
-                    <input type="text" value={title} name="title" onChange = {(event) =>{setTitle(event.target.value)}}/>
-                </p>
-                <p>
-                    <label>Bidder ID#</label> <br />
-                    <input type="text" value={BidderID} name="BidderID" onChange = {(event) =>{setBidderID(event.target.value)}}/>
-                </p>
-                <p>
-                    <label>Poster ID#</label> <br />
-                    <input type="text" value={PosterID} name="PosterID" onChange = {(event) =>{setPosterID(event.target.value)}}/>
-                </p>
-                <p>
-                    <label>Task Description</label> <br />
-                    <textarea type="text" value={description} name="description" onChange = {(event) =>{setDescription(event.target.value)}}/>
-                </p>
+            <form className={classes.root} onSubmit={onSubmitHandler}>
+                <TextField 
+                    required 
+                    id="standard-required" 
+                    label="Task Title:" 
+                    onChange ={(e) => setTitle(e.target.value)}
+                    value = {title}
+                />
+                <br/>
+                <TextField 
+                    disabled 
+                    id="standard-disabled" 
+                    label="Poster ID:" 
+                    defaultValue = {context.userid}
+                />
+                <br/>
+                <TextField
+                    id="outlined-multiline-static"
+                    label="Task Description"
+                    multiline
+                    rows="4"
+                    variant="outlined"
+                    onChange = {(event) =>{setDescription(event.target.value)}}
+                    value = {description}
+                />
+                <br/>
                 <p>
                     <label>Task Start Date</label> <br />
                     <input type="date" value={startDate} name="startDate" onChange = {(event) =>{setStartDate(event.target.value)}}/>

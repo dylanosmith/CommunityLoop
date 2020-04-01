@@ -27,7 +27,7 @@ function App () {
         <Router>
           <LoginRegView path = "/" />
           <HomePage path = "/home" />
-          <NewTask path = "/tasks/:id/new" />
+          <NewTask path = "/tasks/new" />
           <TaskList path ="/tasks/:id/list" />
           <TaskDetail path = "/tasks/:id" />
           <EditTask path = "/tasks/:id/edit" />

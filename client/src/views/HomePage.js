@@ -21,12 +21,12 @@ const HomePage = props => {
     //     })
     // }, []);
     return(
-        <div style={{backgroundColor:"#b19cd9", height:"650px", padding:"10px", verticalAlign:"top"}}>
-            <div style={{backgroundColor:"white", height:"90px", margin:"0px 5px 0px 5px"}}>
+        <div style={{backgroundColor:"#b19cd9", height:"100vh", padding:"10px", verticalAlign:"top"}}>
+            {/* <div style={{backgroundColor:"white", height:"90px", margin:"0px 5px 0px 5px"}}>
                 <h1 style={{textAlign:"left", margin:"0px 0px 0px 25px"}}>Community Loop</h1>
                 <input placeholder="Search CommLoop" type="text" style={{marginLeft:"650px"}}></input>
-            </div>
-            <div style={{backgroundColor:"white", height:"70px", margin:"10px 5px 5px 5px", textAlign:"left", verticalAlign:"top"}}>
+            </div> */}
+            <div style={{backgroundColor:"white", height:"70px", margin:"2px 5px 2px 5px", textAlign:"left", verticalAlign:"top"}}>
                     <h3 style={{display:"inline-block", marginRight:"40px", marginLeft:"10px"}}>Welcome, {context.firstName}!</h3>
                     <p style={{display:"inline-block", marginRight:"80px"}}>View Profile</p>
                     <h5 style={{display:"inline-block", marginRight:"150px"}}>Ratings:</h5>

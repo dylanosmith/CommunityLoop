@@ -23,8 +23,8 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    color: white;
-    text-decoration: non
+    color: 'white',
+    textDecoration: 'none'
   },
 }));
 
@@ -60,11 +60,10 @@ export default function NavAppBar(props) {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            <Link to="/home"><h3 className="app-bar-title">CommunityLoop</h3></Link>
+          <Typography variant="h4" className={classes.title}>
+            <Link to="/home" className={classes.title}>CommunityLoop</Link>
           </Typography>
             <div>
-              {/* { context.userid && ( */}
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -74,7 +73,6 @@ export default function NavAppBar(props) {
               >
                 <AccountCircle />
               </IconButton>
-              {/* )} */}
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}

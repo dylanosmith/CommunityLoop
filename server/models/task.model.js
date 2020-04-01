@@ -28,7 +28,7 @@ const TaskSchema = new mongoose.Schema ({
 
     completed: {
         type: Boolean,
-        required: [true]
+        default: false
     },
 
     typeOfTask: {
