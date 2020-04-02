@@ -1,12 +1,9 @@
 import React, { useEffect, useContext, useState } from 'react';
-// import Header from '../components/Header'
-import NavAppBar from '../components/Navigation/NavAppBar';
 import NavbarContext from '../context/NavbarContext';
-// import SideBar from '../components/SideBar'
-// import Map from '../components/Map';
 import axios from "axios";
 import TaskList from '../views/TaskList'
 import { Button } from '@material-ui/core';
+import { Link } from '@reach/router'
 
 const HomePage = props => {
     const context = useContext(NavbarContext);
@@ -37,10 +34,16 @@ const HomePage = props => {
 
             <div style={{backgroundColor:"white", height:"15%", textAlign:"left", verticalAlign:"top", marginBottom:"2%"}}>
                     <h3 style={{display:"inline-block", marginLeft:"6%"}}>Welcome {context.firstName}!</h3>
-                    <Button variant="outline">View Profile</Button>
+                    <Link className="homeLinks" to={`/user/${context.userid}`}>
+                        <Button variant="outline">View Profile</Button>
+                    </Link>
                     <h5 style={{display:"inline-block", marginLeft:"15%", marginRight:"15%"}}>Ratings:</h5>
-                    <Button variant="outline">Post a Job</Button>
-                    <Button variant="outline">Do some stuff</Button>
+                    <Link className="homeLinks" to="/tasks/new">
+                        <Button variant="outline">Post a Job</Button>
+                    </Link>
+                    <Link className="homeLinks" to="/">
+                        <Button variant="outline">Do some stuff</Button>
+                    </Link>
             </div>
             <div style={{backgroundColor:"white", width:"25%", display:"inline-block", verticalAlign:"top"}}>
             {/* <TaskList firstName={user.firstName}/> */}
