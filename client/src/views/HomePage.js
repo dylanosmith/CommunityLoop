@@ -13,6 +13,18 @@ const HomePage = props => {
         notifications:"",
         image:"",
     });
+
+// Initialize and add the map
+function initMap() {
+    // The location of Uluru
+    var uluru = {lat: @Model.DiveSite.Latitude, lng: @Model.DiveSite.Longitude};
+    // The map, centered at Uluru
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 11, center: uluru});
+    // The marker, positioned at Uluru
+    var marker = new google.maps.Marker({position: uluru, map: map});
+    }
+        
     // const [user, setUser] = React.useState({})
 
     // useEffect(() => {
@@ -54,7 +66,21 @@ const HomePage = props => {
                 </div>
             </div>
             <div style={{backgroundColor:"white", width:"70%", height:"775px", display:"inline-block", marginLeft:"1%"}}>
-                Map
+            // Map
+            <div class="row" style={{height: "400px", width: "100%"}}>
+                <style>
+                /* Set the size of the div element that contains the map */
+                #map {
+                    height: 400px;  /* The height is 400 pixels */
+                    width: 100%;  /* The width is the width of the web page */
+                }
+                </style>
+                <div id="map"></div>
+                <script>
+                </script>
+                <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa_05unLMf5OQPJyPUwx8eo7rx01Njqsg&callback=initMap">
+                </script>
             </div>
         </div>
     )

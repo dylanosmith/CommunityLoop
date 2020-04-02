@@ -52,11 +52,13 @@ const NewTask = props =>{
             <h1>New Task</h1>
             <form className={classes.root} onSubmit={onSubmitHandler}>
                 <TextField 
-                    required 
-                    id="standard-required" 
+                    className="inputBox"
+                    type="text"
+                    required id="standard-required" 
                     label="Task Title:" 
                     onChange ={(e) => setTitle(e.target.value)}
                     value = {title}
+                    name="title"
                 />
                 <br/>
                 <TextField 
