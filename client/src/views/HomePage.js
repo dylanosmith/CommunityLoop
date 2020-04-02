@@ -4,6 +4,7 @@ import axios from "axios";
 import TaskList from '../views/TaskList'
 import { Button } from '@material-ui/core';
 import { Link } from '@reach/router'
+import GoogleMap from "../components/Home/GoogleMap";
 
 
 
@@ -59,7 +60,8 @@ const HomePage = props => {
             </div>
             <div style={{backgroundColor:"white", width:"70%", height:"775px", display:"inline-block", marginLeft:"1%"}}>
             
-                <div class="row">
+                <div className="map">
+                    <GoogleMap />
                 </div>
             </div>
         </div>
