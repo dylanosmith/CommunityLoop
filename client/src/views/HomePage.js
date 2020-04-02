@@ -4,7 +4,7 @@ import axios from "axios";
 import TaskList from '../views/TaskList'
 import { Button } from '@material-ui/core';
 import { Link } from '@reach/router'
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+
 
 
 const HomePage = props => {
