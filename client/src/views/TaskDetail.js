@@ -13,7 +13,8 @@ const TaskDetail = props => {
 
     const dateFormat = (date) => {
         let taskDate = new Date(date);
-        return taskDate.getMonth() + "/" + taskDate.getDate() + "/" + taskDate.getFullYear()
+        console.log(taskDate);
+        return taskDate.getMonth()+1 + "/" + taskDate.getDate() + "/" + taskDate.getFullYear()
     }
 
     useEffect(() => {
