@@ -1,17 +1,9 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import 'date-fns';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { navigate } from "@reach/router";
+// import { navigate } from "@reach/router";
 import NavbarContext from "../context/NavbarContext";
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,13 +12,6 @@ const useStyles = makeStyles(theme => ({
         width: '25ch',
       },
     },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 250,
-      },
-      selectEmpty: {
-        marginTop: theme.spacing(2),
-      },
   }));
 
 const NewTask = props =>{
@@ -34,35 +19,31 @@ const NewTask = props =>{
     const context = useContext(NavbarContext);
 
     const [title, setTitle] = useState("");
-
-    const [PosterID] = useState(context.userid);
+    const [BidderID, setBidderID] = useState(0);
+    const [PosterID, setPosterID] = useState(0);
     const [description, setDescription] = useState("");
-    const [startDate, setStartDate] = useState(new Date('2020-04-01T21:11:54'));
-    const [completionDate, setCompletionDate] = useState(new Date('2020-04-01T21:11:54'));
+    const [startDate, setStartDate] = useState(Date);
+    const [completionDate, setCompletionDate] = useState(Date);
     const [completed, setCompleted] = useState(true);
-    const [typeOfTask, setTypeOfTask] = useState("");
-    const [location, setLocation] = useState({
-        streetLine1:"",
-        streetLine2: "",
-        city: "",
-        state:"",
-        zipcode: 83702
-    });
+    const [typeOfTask, setTypeOfTask] = useState(false);
+    const [location, setLocation] = useState("")
 
     const onSubmitHandler = event => {
         event.preventDefault();
         axios.post('http://localhost:8000/api/tasks/new', {
             title,
+            BidderID,
             PosterID,
             description,
             startDate,
             completionDate,
+            completed,
             typeOfTask,
-            location
+            location,
         })
         .then(response => {
             console.log("Response:", response);
-            props.navigate(`/tasks/${response.data._id}`);
+            props.navigate(`/tasks/${props.id}/list`);
         })
         .catch(error => console.log("Error:", error))
     }
@@ -76,15 +57,14 @@ const NewTask = props =>{
                     required id="standard-required" 
                     label="Task Title:" 
                     onChange ={(e) => setTitle(e.target.value)}
-                    value = {title}
-                    name="title"
+                    defaultValue = {title}
+                    className="title"
                 />
                 <br/>
                 <TextField 
-                    disabled 
-                    id="standard-disabled" 
+                    disabled id="standard-disabled" 
                     label="Poster ID:" 
-                    value = {PosterID}
+                    defaultValue = {context.userid}
                 />
                 <br/>
                 <TextField
@@ -92,101 +72,74 @@ const NewTask = props =>{
                     label="Task Description"
                     multiline
                     rows="4"
+                    defaultValue="Task Descrip"
                     variant="outlined"
                     onChange = {(event) =>{setDescription(event.target.value)}}
                     value = {description}
                 />
                 <br/>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                        margin="normal"
-                        id="date-picker-dialog"
-                        label="Select a start date"
-                        format="MM/dd/yyyy"
-                        value={startDate}
-                        onChange={(date) =>{setStartDate(date)}}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                    />
-                    <br/>
-                    <KeyboardDatePicker
-                        margin="normal"
-                        id="date-picker-dialog"
-                        label="Select a completion date"
-                        format="MM/dd/yyyy"
-                        value={completionDate}
-                        onChange={(date) =>{setCompletionDate(date)}}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                    />
-                    <br/>
-                </MuiPickersUtilsProvider>
-                <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-helper-label">Job Type</InputLabel>
-                    <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    value={typeOfTask}
-                    onChange = {(event) =>{setTypeOfTask(event.target.value)}}
-                    >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={"Bid"}>Bid</MenuItem>
-                        <MenuItem value={"Barter"}>Barter</MenuItem>
-                        <MenuItem value={"Free"}>Free</MenuItem>
-                    </Select>
-                    <FormHelperText>Select a job type</FormHelperText>
-                </FormControl>
-                <br/>
-                <h3>Enter Location:</h3>
-                <br/>
-                <TextField 
-                    required 
-                    id="standard-required" 
-                    label="Street Line 1:" 
-                    onChange ={(e) => setLocation({...location,
-                        streetLine1: e.target.value})}
-                    value = {location.streetLine1}
+                <TextField
+                    id="date"
+                    label="Task Start Date" 
+                    type="date" 
+                    defaultValue={startDate} 
+                    className={classes.textField}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    onChange = {(event) =>{setStartDate(event.target.value)}}
                 />
                 <br/>
-                <TextField 
-                    id="standard-required" 
-                    label="Street Line 2:" 
-                    onChange ={(e) => setLocation({...location,
-                        streetLine2: e.target.value})}
-                    value = {location.streetLine2}
+                <TextField
+                    id="date"
+                    label="Task Completion Date"
+                    type="date" 
+                    defaultValue={completionDate} 
+                    className={classes.textField}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    onChange = {(event) =>{setCompletionDate(event.target.value)}}
                 />
                 <br/>
-                <TextField 
-                    id="standard-required" 
-                    label="City:" 
-                    onChange ={(e) => setLocation({...location,
-                        city: e.target.value})}
-                    value = {location.city}
-                />
-                <br/>
-                <TextField 
-                    id="standard-required" 
-                    label="State:" 
-                    onChange ={(e) => setLocation({...location,
-                        state: e.target.value})}
-                    value = {location.state}
-                />
-                <br/>
-                <TextField 
-                    id="standard-required" 
-                    label="ZipCode:"
-                    type="number"
-                    onChange ={(e) => setLocation({...location,
-                        zipcode: e.target.value})}
-                    value = {location.zipcode}
-                />
-                <br/>
-                
-                <Button type = "submit" variant ="outlined" color="secondary">Add Task</Button>
+
+                <p>
+                    <label>Completed</label> <br />
+                    <input type="boolean" value={completed} name="completed" onChange = {(event) =>{setCompleted(event.target.value)}}/>
+                </p>
+                <p>
+                <label htmlFor="typeOfTask">Task Resolution Type</label> <br />
+                <select value={typeOfTask} name="typeOfTask" onChange = {(event) =>{setTypeOfTask(event.target.value)}}>
+                    <option>Choose One...</option>
+                    <option value={typeOfTask.bid} name="bid">Bid</option>
+                    <option value={typeOfTask.barter} name="barter">Barter</option>
+                    <option value={typeOfTask.free} name="free">Free</option>
+                </select>
+                </p>
+                <p>
+                    <label>Location</label> <br />
+                    <p>
+                    <label>Street Address Line 1</label>
+                    <input type="text" value={location.streeLine1} name="streetLine1" onChange = {(event) => {setLocation({...location, streetLine1:event.target.value})}}/>
+                    </p>
+                    <p>
+                    <label>Street Address Line 2</label>
+                    <input type="text" value={location.streeLine2} name="streetLine2" onChange = {(event) => {setLocation({...location, streetLine2:event.target.value})}}/>
+                    </p>
+                    <p>
+                    <label>City</label>
+                    <input type="text" value={location.city} name="city" onChange = {(event) => {setLocation({...location, city:event.target.value})}}/>
+                    </p>
+                    <p>
+                    <label>State</label>
+                    <input type="text" value={location.state} name="state" onChange = {(event) => {setLocation({...location, state:event.target.value})}}/>
+                    </p>
+                    <p>
+                    <label>Zipcode</label>
+                    <input type="text" value={location.zipcode} name="zipcode" onChange = {(event) => {setLocation({...location, zipcode:event.target.value})}}/>
+                    </p>
+                    <input className="button" type="submit"/>
+                </p>
             </form>
         </div>
     )
