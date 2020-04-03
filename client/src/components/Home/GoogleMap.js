@@ -96,9 +96,3 @@ const GoogleMap = props => {
         </InfoWindow>
 
     </Map>
-  )
-}
-
-export default GoogleApiWrapper({
-  apiKey:"AIzaSyAa_05unLMf5OQPJyPUwx8eo7rx01Njqsg"
-})(GoogleMap);
