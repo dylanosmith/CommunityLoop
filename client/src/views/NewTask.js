@@ -38,8 +38,8 @@ const NewTask = props =>{
 
     const [PosterID] = useState(context.userid);
     const [description, setDescription] = useState("");
-    const [startDate, setStartDate] = useState(new Date('2020-04-01T21:11:54'));
-    const [completionDate, setCompletionDate] = useState(new Date('2020-04-01T21:11:54'));
+    const [startDate, setStartDate] = useState(new Date());
+    const [completionDate, setCompletionDate] = useState(new Date());
     const [completed, setCompleted] = useState(true);
     const [typeOfTask, setTypeOfTask] = useState("");
     const [location, setLocation] = useState({
@@ -47,7 +47,7 @@ const NewTask = props =>{
         streetLine2: "",
         city: "",
         state:"",
-        zipcode: 83702
+        zipcode: null
     });
 
     const onSubmitHandler = event => {

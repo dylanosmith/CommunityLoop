@@ -34,6 +34,18 @@ const TaskDetail = props => {
             console.log("SOMETHING IS WRONGGGGGG! HELP MEEEEE", error)
         );
     }, []);
+
+    useEffect(() => {
+        console.log("Axios call for Google Places search");
+        axios.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=7774+W+Devonwood+street+Boise+ID+83714&key=AIzaSyAa_05unLMf5OQPJyPUwx8eo7rx01Njqsg")
+        .then(response => {
+            console.log("Google Response:", response);
+        })
+        .catch(googleError => console.log("Problem with Google Maps request.")
+        );
+
+    }, []);
+
     return(
         <div>
             <h2>{ taskState.title }</h2>
