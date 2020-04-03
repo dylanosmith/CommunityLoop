@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import { Link } from '@reach/router';
 
 const TaskDetail = props => {
     const [taskState, setTaskState] = useState({
@@ -33,13 +34,25 @@ const TaskDetail = props => {
             console.log("SOMETHING IS WRONGGGGGG! HELP MEEEEE", error)
         );
     }, []);
+
+    useEffect(() => {
+        console.log("Axios call for Google Places search");
+        axios.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=7774+W+Devonwood+street+Boise+ID+83714&key=AIzaSyAa_05unLMf5OQPJyPUwx8eo7rx01Njqsg")
+        .then(response => {
+            console.log("Google Response:", response);
+        })
+        .catch(googleError => console.log("Problem with Google Maps request.")
+        );
+
+    }, []);
+
     return(
         <div>
             <h2>{ taskState.title }</h2>
             <div><p>Description: { taskState.description }</p></div>
             <div><p>Start Date: { dateFormat(taskState.startDate) }</p></div>
             <div><p>Completion Date: { dateFormat(taskState.completionDate) } </p></div>
-        <Button variant="outline" color="primary">Back To Map</Button>
+        <Link to="/home"><Button variant="outline" color="primary">Back To Map</Button></Link>
         <Button variant="outline" color="primary">Submit Bid</Button>
         <Button variant="outline" color="primary">Message Poster</Button>
         </div>
