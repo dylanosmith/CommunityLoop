@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from "axios";
-import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
 
 const GoogleMap = props => {
   const {tasks} = props;
@@ -29,19 +29,6 @@ const GoogleMap = props => {
 
   // setPositions(geocodeAddress(`${tasks[0].streetLine1 + "," + tasks[0].location.city + "," + tasks[0].location.state}`));
   // console.log(positions);
-  return (
-      <Map
-        google={window.google}
-        zoom={10}
-        style={mapStyles}
-        initialCenter={{ lat: 43.6005615, lng: -116.2177009}}
-        containerStyle={{ width: '73vw', height: '80vh' }}
-      >   
-        {/* <Marker position = {{lat: positions.lat, lng: positions.lng}} /> */}
-
-       {/* <Marker position = {{lat: 43.6538708, lng: -116.1724573}} />
-        <Marker position = {{lat: 43.6150186, lng: -116.2023137}} /> */}
-      </Map>
   const [markerState, setMarkerState] = useState({
     showingInfoWindow: false,
     activeMarker: {},
@@ -61,7 +48,13 @@ const GoogleMap = props => {
       zoom={10}
       style={mapStyles}
       initialCenter={{ lat: 43.6005615, lng: -116.2177009}}
-    >
+      containerStyle={{ width: '73vw', height: '80vh' }}
+      >
+      {/* <Marker position = {{lat: positions.lat, lng: positions.lng}} /> */}
+
+      {/* <Marker position = {{lat: 43.6538708, lng: -116.1724573}} />
+        <Marker position = {{lat: 43.6150186, lng: -116.2023137}} /> */}
+
       <Marker name={'Task Name'} position = {{ lat: 43.6005615, lng: -116.2177009}} onClick={onMarkerClick} />
       <InfoWindow
           marker={markerState.activeMarker}
