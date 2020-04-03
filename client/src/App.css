@@ -12,10 +12,7 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-.map{
-  height: 800px;
-  width: 800px;
-}
+
 
 .formContainer {
   height: 100vh;
@@ -24,6 +21,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
+
+.homeContainer {
+  height: 90vh;
 }
 
 app-bar-title {
@@ -39,6 +40,14 @@ app-bar-title {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.linkDecor{
+  text-decoration: none;
+}
+
+.homeLinks{
+  text-decoration: none;
 }
 
 .App-link {

@@ -26,6 +26,11 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     textDecoration: 'none'
   },
+  logo: {
+    width: "50px",
+    height: "50px",
+    marginTop: "3px"
+  }
 }));
 
 export default function NavAppBar(props) {
@@ -58,7 +63,8 @@ export default function NavAppBar(props) {
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+            {/* <MenuIcon /> */}
+            <img className={classes.logo} src="https://cdn0.iconfinder.com/data/icons/gradient-runded-glowing-icons/128/infinity.png" alt=""/>
           </IconButton>
           <Typography variant="h4" className={classes.title}>
             <Link to="/home" className={classes.title}>CommunityLoop</Link>

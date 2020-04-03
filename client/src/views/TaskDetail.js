@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import { Link } from "@reach/router";
 
 const TaskDetail = props => {
     const [taskState, setTaskState] = useState({
@@ -39,9 +40,9 @@ const TaskDetail = props => {
             <div><p>Description: { taskState.description }</p></div>
             <div><p>Start Date: { dateFormat(taskState.startDate) }</p></div>
             <div><p>Completion Date: { dateFormat(taskState.completionDate) } </p></div>
-        <Button variant="outline" color="primary">Back To Map</Button>
-        <Button variant="outline" color="primary">Submit Bid</Button>
-        <Button variant="outline" color="primary">Message Poster</Button>
+        <Link to="/home" className="linkDecor"><Button variant="outlined" color="primary">Back To Map</Button></Link>
+        <Button variant="outlined" color="primary">Submit Bid</Button>
+        <Button variant="outlined" color="primary">Message Poster</Button>
         </div>
     )
 }

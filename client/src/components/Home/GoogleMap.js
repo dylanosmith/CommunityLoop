@@ -1,20 +1,47 @@
 import React from 'react';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import axios from "axios";
+import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 
 const GoogleMap = props => {
+  const {tasks} = props;
+
+  const [positions, setPositions] = React.useState([])
+  console.log("GoogleMap function:", tasks);
   const mapStyles = {
-    width: '70%',
-    height: '84%',
+    width: '100%',
+    height: '100%'
   };
+
+  /*global google*/ // To disable any eslint 'google not defined' errors
+  const geocoder = new google.maps.Geocoder();
+
+  const geocodeAddress = (address) => {
+    geocoder.geocode({'address': address}, function(results, status){
+      if (status === 'OK') {
+        let lat = results[0].geometry.location.lat()
+        let lng = results[0].geometry.location.lng()
+        return ({lat: lat, lng: lng})
+      }else {
+        console.log("Geocode was not successful for the following reason: " + status)
+      }
+    })
+  }
+
+  // setPositions(geocodeAddress(`${tasks[0].streetLine1 + "," + tasks[0].location.city + "," + tasks[0].location.state}`));
+  // console.log(positions);
   return (
-    <Map
-      google={window.google}
-      zoom={10}
-      style={mapStyles}
-      initialCenter={{ lat: 43.6005615, lng: -116.2177009}}
-    >
-      <Marker position = {{ lat: 43.6005615, lng: -116.2177009}} />
-    </Map>
+      <Map
+        google={window.google}
+        zoom={10}
+        style={mapStyles}
+        initialCenter={{ lat: 43.6005615, lng: -116.2177009}}
+        containerStyle={{ width: '73vw', height: '80vh' }}
+      >   
+        {/* <Marker position = {{lat: positions.lat, lng: positions.lng}} /> */}
+
+       {/* <Marker position = {{lat: 43.6538708, lng: -116.1724573}} />
+        <Marker position = {{lat: 43.6150186, lng: -116.2023137}} /> */}
+      </Map>
   )
 }
 

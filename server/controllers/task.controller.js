@@ -8,7 +8,7 @@ module.exports.Create = (req, res) => {
 };
 
 module.exports.findAllTasks = (req,res) => {
-    Task.find()
+    Task.find({}).collation({locale:"en", strength: 2}).sort({createdAt: -1})
         .then((allTasks) => res.json({tasks: allTasks}))
         .catch(err => res.json ({message: "Something went wrong!", error: err }));
 };

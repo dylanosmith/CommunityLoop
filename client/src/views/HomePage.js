@@ -4,66 +4,63 @@ import axios from "axios";
 import TaskList from '../views/TaskList'
 import { Button } from '@material-ui/core';
 import { Link } from '@reach/router'
+import Grid from '@material-ui/core/Grid';
 import GoogleMap from "../components/Home/GoogleMap";
-
-
 
 const HomePage = props => {
     const context = useContext(NavbarContext);
-    const [user, setUser] = useState({
-        firstName:"",
-        lastName:"",
-        notifications:"",
-        image:"",
-    });
 
-// Initialize and add the map
-        
-    // const [user, setUser] = React.useState({})
+    const [tasks, setTasks] = useState([])
+    React.useEffect(() => {
+        axios.get("http://localhost:8000/api/tasks")
+        .then(res => {
+            console.log("This is response:", res);
+            setTasks(res.data.tasks)
+        })
+        .catch(error =>
+            console.log("Errors here", error)
+        );
+      }, []);
 
-    // useEffect(() => {
-    //     axios.get(`http://localhost:8000/api/users/${id}`)
-    //         .then(res => {
-    //             console.log(res);
-    //             setUser(res.data.user);
-    //     })
-    //     .catch(err => {
-    //         console.log("UHHHH OHHHHHH", err);
-    //     })
-    // }, []);
     return(
-        <div style={{backgroundImage:"linear-gradient(to bottom, #3f51b5 50%, #4e42f5 100%)", height:"100%", verticalAlign:"top"}}>
+        <div className="homeContainer">
+
+            {/* style={{backgroundImage:"linear-gradient(to bottom, #3f51b5 50%, #4e42f5 100%)", height:"100%", verticalAlign:"top"}} */}
             {/* <div style={{backgroundColor:"black", height:"25%", margin:"0% 10% 0% 10%"}}>
                 <h1 style={{textAlign:"left", margin:"0% 0% 0% 15%"}}>Community Loop</h1>
                 <input placeholder="Search CommLoop" type="text" style={{marginLeft:"92%"}}></input>
             </div> */}
-
-            <div style={{backgroundColor:"white", height:"15%", textAlign:"left", verticalAlign:"top", marginBottom:"2%"}}>
-                    <h3 style={{display:"inline-block", marginLeft:"6%"}}>Welcome {context.firstName}!</h3>
-                    <Link className="homeLinks" to={`/user/${context.userid}`}>
-                        <Button variant="outline">View Profile</Button>
-                    </Link>
-                    <h5 style={{display:"inline-block", marginLeft:"15%", marginRight:"15%"}}>Ratings:</h5>
-                    <Link className="homeLinks" to="/tasks/new">
-                        <Button variant="outline">Post a Job</Button>
-                    </Link>
-                    <Link className="homeLinks" to="/">
-                        <Button variant="outline">Do some stuff</Button>
-                    </Link>
-            </div>
-            <div style={{backgroundColor:"white", width:"25%", display:"inline-block", verticalAlign:"top"}}>
-                <h2>Posted Jobs</h2>
-                <Button variant="outline">Sort By: </Button>
-                <div className="sidebar">
-                    <TaskList />
-                </div>
-            </div>
-            <div style={{backgroundColor:"white", width:"70%", height:"775px", display:"inline-block", marginLeft:"1%"}}>
-            
-                <div className="map">
-                    <GoogleMap />
-                </div>
-            </div>
+            <Grid container direction="row" justify="space-around">
+                <Grid item xs={12} sm={12}>
+                    <div style={{backgroundColor:"white", display:"flex", justifyContent:"space-evenly", marginBottom:"2%", alignItems:"center"}}>
+                        <h3 style={{display:"inline-block"}}>Welcome {context.firstName}!</h3>
+                        <Link className="homeLinks" to={`/user/${context.userid}`}>
+                            <Button variant="outlined" color="primary">View Profile</Button>
+                        </Link>
+                        <h5 style={{display:"inline-block", marginLeft:"15%", marginRight:"15%"}}>Ratings: <span style={{color: "gold"}}>&#9734; &#9734; &#9734; &#9734; &#9734;</span></h5>
+                        <Link className="homeLinks" to="/tasks/new">
+                            <Button variant="contained" color="secondary">Post a Job</Button>
+                        </Link>
+                        <Link className="homeLinks" to="/">
+                            <Button variant="outlined" color="primary">Manage Jobs</Button>
+                        </Link>
+                    </div>
+                </Grid>
+            </Grid>
+            <Grid container direction="row" justify="space-around">
+                <Grid item xs={3} sm={3}>
+                    <div>
+                        <h2>Posted Jobs</h2>
+                        <Button variant="outlined">Sort By: </Button>
+                        <div>
+                            <TaskList tasks ={tasks} />
+                        </div>
+                    </div>
+                </Grid>
+                <Grid item xs={9} sm={9}>
+                    <GoogleMap tasks = {tasks} />
+                </Grid>
+            </Grid>
         </div>
     )
 }
